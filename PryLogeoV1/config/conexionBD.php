@@ -1,24 +1,44 @@
 <?php
+
 class ConexionBD {
-    // Reemplaza con tus valores de Clever Cloud
-    private $host = "b6r97syfb1cm98gl75cv-mysql.services.clever-cloud.com"; 
-    private $db_name = "b6r97syfb1cm98gl75cv";
-    private $username = "uz8ia64bxapybifr"; 
-    private $password = "TU_CONTRASEÑA_DE_CLEVER_CLOUD"; // Copia el valor de MYSQL_ADDON_PASSWORD
-    private $port = "3306";
+
     public $conn;
 
     public function getConnection() {
-        $this->conn = null;
-        try {
-            // Se añade el puerto a la cadena de conexión de PDO
-            $this->conn = new PDO("mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn->exec("set names utf8");
-        } catch(PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
+
+        $host = getenv("MYSQL_ADDON_HOST");
+        $db_name = getenv("MYSQL_ADDON_DB");
+        $username = getenv("MYSQL_ADDON_USER");
+        $password = getenv("MYSQL_ADDON_PASSWORD");
+        $port = getenv("MYSQL_ADDON_PORT") ?: "3306";
+
+        if (!$host || !$db_name || !$username || !$password) {
+            error_log("Faltan variables de configuración de MySQL.");
+            return null;
         }
+
+        try {
+
+            $this->conn = new PDO(
+                "mysql:host={$host};port={$port};dbname={$db_name};charset=utf8mb4",
+                $username,
+                $password,
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
+                ]
+            );
+
+        } catch (PDOException $exception) {
+
+            error_log("Error de conexión MySQL: " . $exception->getMessage());
+            $this->conn = null;
+
+        }
+
         return $this->conn;
     }
 }
+
 ?>
