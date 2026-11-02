@@ -1,0 +1,52 @@
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef2f5; overflow: hidden; }
+
+/* Barra Superior */
+.navbar { background-color: #d32f2f; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.brand { display: flex; align-items: center; gap: 15px; font-size: 1.2rem; font-weight: bold; }
+.brand img { height: 40px; border-radius: 5px; }
+.btn-regresar { background-color: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+.btn-regresar:hover { background-color: #555; }
+
+/* Contenedor Principal (Pantalla Dividida) */
+.pos-container { display: flex; height: calc(100vh - 60px); padding: 15px; gap: 15px; box-sizing: border-box; }
+
+/* Panel Izquierdo (Productos) */
+.products-panel { flex: 2; background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow-y: auto; }
+.panel-title { margin-top: 0; color: #d32f2f; border-bottom: 2px solid #fbc02d; padding-bottom: 10px; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+
+/* Botones de Producto (Generados por JS) */
+.product-card { background-color: #fcfcfc; border: 2px solid #e0e0e0; border-radius: 8px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; gap: 10px; }
+.product-card:hover { border-color: #fbc02d; background-color: #fffde7; transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.product-card .p-name { font-weight: bold; color: #333; font-size: 1.1rem; }
+.product-card .p-price { color: #2e7d32; font-size: 1.3rem; font-weight: 900; }
+
+/* Panel Derecho (El Ticket) */
+.ticket-panel { flex: 1; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; min-width: 350px; }
+.ticket-header { background-color: #f8f9fa; padding: 15px; text-align: center; border-bottom: 2px dashed #ccc; border-radius: 8px 8px 0 0; }
+.ticket-header h2 { margin: 0; color: #333; }
+.ticket-header span { color: #666; font-size: 0.9rem; }
+
+.ticket-body { flex: 1; overflow-y: auto; padding: 10px; background-color: #fffdf5; } /* Color estilo papel de ticket */
+.ticket-table { width: 100%; border-collapse: collapse; text-align: center; }
+.ticket-table th { border-bottom: 2px solid #333; padding: 8px; color: #333; }
+.ticket-table td { padding: 12px 5px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+.ticket-table .td-name { text-align: left; font-weight: bold; }
+.btn-del-row { background-color: #ffcdd2; color: #c62828; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+
+.ticket-footer { padding: 20px; border-top: 2px dashed #ccc; background-color: #f8f9fa; border-radius: 0 0 8px 8px; }
+.total-row { display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: 900; color: #d32f2f; margin-bottom: 15px; }
+
+.payment-section { margin-bottom: 15px; }
+.payment-section label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+.input-group { display: flex; align-items: center; border: 2px solid #ccc; border-radius: 4px; overflow: hidden; background: white; }
+.input-group span { padding: 10px; background-color: #eee; font-weight: bold; font-size: 1.2rem; }
+.input-group input { flex: 1; border: none; padding: 10px; font-size: 1.5rem; outline: none; font-weight: bold; text-align: right; }
+
+.change-row { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: bold; margin-bottom: 20px; }
+
+.btn-cobrar { width: 100%; padding: 15px; font-size: 1.2rem; font-weight: bold; color: white; background-color: #2e7d32; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px; transition: 0.3s;}
+.btn-cobrar:disabled { background-color: #a5d6a7; cursor: not-allowed; }
+.btn-cobrar:hover:not(:disabled) { background-color: #1b5e20; }
+.btn-cancelar { width: 100%; padding: 10px; font-size: 1rem; font-weight: bold; color: #d32f2f; background-color: transparent; border: 2px solid #d32f2f; border-radius: 5px; cursor: pointer; }
+.btn-cancelar:hover { background-color: #ffebee; }

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Inventario - Pollos El Güero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* TEMA OSCURO - INVENTARIO */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-panel: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-gold: #ffc107;
+            --stock-green: #28a745;
+            --btn-green: #28a745;
+            --btn-red: #dc3545;
+            --btn-blue: #17a2b8;
+            --border-color: #333333;
+            --input-bg: #2a2a2a;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-nuevo {
+            background-color: var(--btn-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-nuevo:hover { filter: brightness(1.1); }
+
+        .toolbar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .filter-box select {
+            padding: 12px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .table-panel {
+            background-color: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--accent-gold);
+            background-color: var(--bg-panel);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .col-id { font-weight: bold; width: 50px; }
+        .item-name { font-weight: bold; font-size: 15px; margin-bottom: 3px; display: block;}
+        .item-category { font-size: 12px; color: var(--text-muted); }
+        .col-stock { 
+            color: var(--stock-green); 
+            font-weight: bold; 
+            font-size: 16px; 
+        }
+
+        .actions-cell {
+            text-align: right;
+            white-space: nowrap;
+        }
+        .btn-action {
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .btn-add-stock { background-color: var(--btn-green); }
+        .btn-sub-stock { background-color: var(--btn-red); }
+        .btn-edit-item { background-color: var(--btn-blue); }
+        .btn-action:hover { filter: brightness(1.2); }
+
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: var(--input-bg);
+            color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-top">
+        <div class="header-title">
+            <i class="fa-solid fa-boxes-stacked"></i> Control de Inventario
+        </div>
+        <button class="btn-nuevo" onclick="abrirModalNuevo()">
+            <i class="fa-solid fa-plus"></i> Nuevo Insumo
+        </button>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="txtBuscar" placeholder="Buscar por nombre o ID...">
+        </div>
+        <div class="filter-box">
+            <select id="filtroCategoria">
+                <option value="Todas las Categorías">Todas las Categorías</option>
+                <option value="Materia Prima">Materia Prima</option>
+                <option value="Empaque">Empaque</option>
+                <option value="Bebida">Bebida</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre del Insumo</th>
+                    <th>Stock Actual</th>
+                    <th>Unidad</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tablaInventario">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="modalNuevoInsumo" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 9999;">
+        <div style="background-color: var(--bg-panel); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); width: 400px;">
+            <h3 style="color: var(--accent-gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">Agregar Nuevo Insumo</h3>
+            
+            <label style="font-size: 13px; color: var(--text-muted);">Nombre del Producto/Insumo:</label>
+            <input type="text" id="txtNuevoNombre" class="modal-input" placeholder="Ej. Coca Cola 600ml">
+            
+            <label style="font-size: 13px; color: var(--text-muted);">Categoría:</label>
+            <select id="selNuevaCategoria" class="modal-input">
+                <option value="Materia Prima">Materia Prima</option>
+                <option value="Empaque">Empaque</option>
+                <option value="Bebida">Bebida</option>
+            </select>
+
+            <label style="font-size: 13px; color: var(--text-muted);">Unidad de Medida:</label>
+            <input type="text" id="txtNuevaUnidad" class="modal-input" placeholder="Ej. Piezas, Litros, Cajas">
+            
+            <label style="font-size: 13px; color: var(--text-muted);">Costo Estimado (Opcional):</label>
+            <input type="number" id="txtNuevoCosto" class="modal-input" step="0.5" value="0.00">
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                <button onclick="cerrarModalNuevo()" style="background: var(--btn-red); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancelar</button>
+                <button onclick="guardarInsumoBD()" style="background: var(--btn-green); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Guardar Insumo</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAjusteStock" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 9999;">
+        <div style="background-color: var(--bg-panel); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); width: 350px;">
+            <h3 id="lblTituloStock" style="margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">Ajuste de Stock</h3>
+            <p id="lblNombreProdStock" style="color: white; font-weight: bold; margin-bottom: 15px; font-size: 16px;"></p>
+            
+            <input type="hidden" id="txtIdAjuste">
+            <input type="hidden" id="txtTipoAjuste">
+
+            <label style="font-size: 13px; color: var(--text-muted);">Cantidad a ajustar:</label>
+            <input type="number" id="txtCantidadAjuste" class="modal-input" step="0.5" min="0.1" placeholder="Ej. 10">
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                <button onclick="cerrarModalStock()" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancelar</button>
+                <button id="btnGuardarStock" onclick="guardarAjusteBD()" style="color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEditarInsumo" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 9999;">
+        <div style="background-color: var(--bg-panel); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); width: 400px;">
+            <h3 style="color: var(--btn-blue); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">Editar Insumo</h3>
+            
+            <input type="hidden" id="txtEditId">
+
+            <label style="font-size: 13px; color: var(--text-muted);">Nombre del Producto/Insumo:</label>
+            <input type="text" id="txtEditNombre" class="modal-input">
+            
+            <label style="font-size: 13px; color: var(--text-muted);">Categoría:</label>
+            <select id="selEditCategoria" class="modal-input">
+                <option value="Materia Prima">Materia Prima</option>
+                <option value="Empaque">Empaque</option>
+                <option value="Bebida">Bebida</option>
+            </select>
+
+            <label style="font-size: 13px; color: var(--text-muted);">Unidad de Medida:</label>
+            <input type="text" id="txtEditUnidad" class="modal-input">
+            
+            <label style="font-size: 13px; color: var(--text-muted);">Costo Estimado:</label>
+            <input type="number" id="txtEditCosto" class="modal-input" step="0.5">
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                <button onclick="cerrarModalEditar()" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancelar</button>
+                <button onclick="guardarEdicionBD()" style="background: var(--btn-blue); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../control/js/inventarioControl.js?v=3"></script>
+</body>
+</html>

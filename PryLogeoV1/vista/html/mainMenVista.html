@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Pollos El Güero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* TEMA OSCURO EMPRESARIAL */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-panel: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-gold: #ffc107;
+            --hover-bg: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- BARRA LATERAL IZQUIERDA (SIDEBAR) --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-panel);
+            border-right: 2px solid var(--hover-bg);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Logotipo / Marca */
+        .brand {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--hover-bg);
+            color: var(--accent-gold);
+        }
+        .brand i { font-size: 24px; }
+        .brand h2 { font-size: 16px; margin: 0; letter-spacing: 1px; }
+
+        /* Tarjeta de Usuario */
+        .user-card {
+            margin: 15px;
+            padding: 15px;
+            background-color: var(--bg-dark);
+            border-radius: 8px;
+            border: 1px solid var(--hover-bg);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-gold);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .user-info p { margin: 0; font-size: 13px; font-weight: bold; }
+        .user-info span { font-size: 11px; color: var(--accent-gold); }
+
+        /* Navegación del Menú */
+        .menu-section {
+            padding: 10px 20px 5px 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        .menu-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 0 10px;
+        }
+        .menu-card {
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 12px 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .menu-nav a i {
+            color: var(--accent-gold);
+            width: 20px;
+            text-align: center;
+        }
+        .menu-card:hover {
+            background-color: var(--hover-bg);
+        }
+        .btn-logout {
+            margin: 20px 15px;
+            padding: 12px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-logout:hover { background-color: #c82333; }
+
+        .hidden-module { display: none !important; }
+
+        /* --- ÁREA PRINCIPAL (CONTENIDO) --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-dark);
+        }
+        
+        .content-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: var(--bg-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-shop"></i>
+            <h2>POLLOS EL GÜERO</h2>
+        </div>
+
+        <div class="user-card">
+            <div class="user-avatar" id="avatarLetra">U</div>
+            <div class="user-info">
+                <p id="lblUsuario">Cargando...</p>
+                <span id="lblRol">Usuario del Sistema</span>
+            </div>
+        </div>
+
+        <div class="menu-section">Principal</div>
+        <nav class="menu-nav">
+            <a href="bienvenidaVista.html?v=11" target="main-frame" id="MOD_DASH" class="menu-card"><i class="fa-solid fa-chart-pie"></i> DashBoard</a>
+        </nav>
+
+        <div class="menu-section">Operaciones</div>
+        <nav class="menu-nav">
+            <a href="ventasVista.htm?v=11" target="main-frame" id="MOD_VENT" class="menu-card"><i class="fa-solid fa-cart-shopping"></i> Ventas</a>
+            <a href="comprasVista.html?v=11" target="main-frame" id="MOD_COMP" class="menu-card"><i class="fa-solid fa-truck-fast"></i> Compras</a>
+            
+            <a href="facturasVista.html?v=1" target="main-frame" id="MOD_FACT" class="menu-card"><i class="fa-solid fa-file-invoice-dollar"></i> Facturas</a>
+            
+            <a href="cajaVista.html?v=11" target="main-frame" id="MOD_CAJA" class="menu-card"><i class="fa-solid fa-cash-register"></i> Corte de Caja</a>
+            <a href="inventarioVista.html?v=1" target="main-frame" id="MOD_INVE" class="menu-card"><i class="fa-solid fa-boxes-stacked"></i> Inventario</a>
+        </nav>
+
+        <div class="menu-section">Mantenimientos</div>
+        <nav class="menu-nav">
+            <a href="catalogoVista.html?v=1" target="main-frame" id="MOD_CATA" class="menu-card"><i class="fa-solid fa-book"></i> Catálogo Productos</a>
+            <a href="personaVista.html?v=11" target="main-frame" id="MOD_PERS" class="menu-card"><i class="fa-solid fa-address-card"></i> Datos Personales</a>
+            <a href="usuariosVista.html?v=11" target="main-frame" id="MOD_USER" class="menu-card"><i class="fa-solid fa-users-gear"></i> Gestión Usuarios</a>
+            <a href="accesosVista.html?v=11" target="main-frame" id="MOD_ACCE" class="menu-card"><i class="fa-solid fa-shield-halved"></i> Control Accesos</a>
+            
+            <a href="cmbPassVista.html?v=99" target="main-frame" id="MOD_PASS" class="menu-card"><i class="fa-solid fa-key"></i> Cambiar Password</a>
+        </nav>
+
+        <button class="btn-logout" onclick="cerrarSesion()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <iframe src="bienvenidaVista.html?v=11" name="main-frame" id="main-frame" class="content-frame"></iframe>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const usuario = localStorage.getItem('usuarioLogueado');
+            const nombreReal = localStorage.getItem('nombreRealUsuario');
+            const permisosRaw = localStorage.getItem('permisosUsuario') || localStorage.getItem('permisos');
+            
+            if(!usuario) { 
+                window.location.href = '../../index.html'; 
+                return; 
+            }
+            
+            // LÓGICA CORREGIDA: Asignar el Login por defecto
+            let nombreMostrar = usuario; 
+            
+            // Verificación estricta: Solo si nombreReal existe, no es vacío, no es la palabra "null" ni "undefined"
+            if (nombreReal && nombreReal !== 'null' && nombreReal !== 'undefined' && nombreReal.trim() !== '') {
+                nombreMostrar = nombreReal;
+            }
+
+            // Pintar el nombre en la interfaz
+            document.getElementById('lblUsuario').innerText = nombreMostrar;
+            
+            if(nombreMostrar.length > 0) {
+                // Pinta la inicial del nombre en el círculo dorado
+                document.getElementById('avatarLetra').innerText = nombreMostrar.charAt(0).toUpperCase();
+            }
+
+            if(usuario === 'Pro20Mot04+') {
+                document.getElementById('lblRol').innerText = "ADMINISTRADOR";
+            } else {
+                document.getElementById('lblRol').innerText = "EMPLEADO";
+            }
+
+            if(permisosRaw) {
+                try {
+                    const permisos = JSON.parse(permisosRaw);
+                    const modulos = document.querySelectorAll('.menu-card[id]');
+                    
+                    modulos.forEach(modulo => {
+                        let tienePermiso = permisos.includes(modulo.id);
+
+                        if (permisos.includes('SCP10000') && (modulo.id === 'MOD_CATA' || modulo.id === 'MOD_VENT' || modulo.id === 'MOD_COMP' || modulo.id === 'MOD_CAJA' || modulo.id === 'MOD_DASH' || modulo.id === 'MOD_INVE' || modulo.id === 'MOD_FACT')) {
+                            tienePermiso = true;
+                        }
+                        if (permisos.includes('SCP20000') && (modulo.id === 'MOD_PERS' || modulo.id === 'MOD_USER' || modulo.id === 'MOD_ACCE' || modulo.id === 'MOD_PASS')) {
+                            tienePermiso = true;
+                        }
+
+                        if (usuario === 'Pro20Mot04+') {
+                            tienePermiso = true;
+                        }
+
+                        if(!tienePermiso) {
+                            modulo.classList.add('hidden-module');
+                        } else {
+                            modulo.classList.remove('hidden-module');
+                        }
+                    });
+                } catch (e) {
+                    console.error("Error al procesar los permisos:", e);
+                }
+            }
+        });
+
+        function mostrarBienvenida() {
+            const iframe = document.getElementById("main-frame");
+            iframe.src = "bienvenidaVista.html?v=11";
+        }
+
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = '../../index.html';
+        }
+    </script>
+</body>
+</html>

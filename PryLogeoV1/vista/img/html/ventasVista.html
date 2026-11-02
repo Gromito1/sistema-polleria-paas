@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Punto de Venta - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/ventasVista.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <img src="../img/logo.jpg" alt="Logo Pollos">
+            <span>Caja Rápida - Ventas</span>
+        </div>
+        <div class="user-info">
+            <span id="lblUsuario">Cajero: Cargando...</span>
+            <button class="btn-regresar" onclick="window.location.href='mainMenVista.html'">Volver al Menú</button>
+        </div>
+    </header>
+
+    <div class="pos-container">
+        
+        <div class="products-panel">
+            <h2 class="panel-title">Menú de Productos</h2>
+            <div class="products-grid" id="contenedorProductos">
+                <p style="color:#666; font-style:italic;">Cargando catálogo desde la Base de Datos...</p>
+            </div>
+        </div>
+
+        <div class="ticket-panel">
+            <div class="ticket-header">
+                <h2>Cuenta Actual</h2>
+                <span id="lblFecha">--/--/----</span>
+            </div>
+            
+            <div class="ticket-body">
+                <table class="ticket-table">
+                    <thead>
+                        <tr>
+                            <th width="15%">Cant</th>
+                            <th width="45%">Producto</th>
+                            <th width="25%">SubT</th>
+                            <th width="15%">❌</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaTicket">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="ticket-footer">
+                <div class="total-row">
+                    <span>TOTAL:</span>
+                    <span id="lblTotal">$0.00</span>
+                </div>
+                
+                <div class="payment-section">
+                    <label>Efectivo Recibido:</label>
+                    <div class="input-group">
+                        <span>$</span>
+                        <input type="number" id="txtPago" placeholder="0.00" min="0" step="0.50">
+                    </div>
+                </div>
+                
+                <div class="change-row">
+                    <span>Cambio:</span>
+                    <span id="lblCambio" style="color: gray;">$0.00</span>
+                </div>
+
+                <button id="btnCobrar" class="btn-cobrar" disabled>💰 Registrar Venta</button>
+                <button id="btnCancelarVenta" class="btn-cancelar">🗑️ Limpiar Ticket</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../control/js/ventasControl.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Corte de Caja - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/cajaVista.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <img src="../img/logo.jpg" alt="Logo Pollos">
+            <span>Corte de Caja Diario</span>
+        </div>
+        <div class="header-actions">
+            <span id="lblFechaActual" class="date-label">Fecha: --/--/----</span>
+            <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir Corte</button>
+            <button class="btn-regresar" onclick="window.location.href='mainMenVista.html'">Volver al Menú</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <div class="summary-cards">
+            <div class="card card-tickets">
+                <h3>Total de Tickets</h3>
+                <p id="lblTotalTickets">0</p>
+            </div>
+            <div class="card card-money">
+                <h3>Ingresos del Día</h3>
+                <p id="lblTotalDinero">$0.00</p>
+            </div>
+        </div>
+
+        <div class="details-panel">
+            <h2 class="panel-title">Detalle de Ventas de Hoy</h2>
+            <table class="sales-table">
+                <thead>
+                    <tr>
+                        <th>Folio Ticket</th>
+                        <th>Hora</th>
+                        <th>Cajero</th>
+                        <th>Total Cobrado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCorte">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #666;">Cargando ventas del día...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="../../control/js/cajaControl.js"></script>
+</body>
+</html>

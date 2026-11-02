@@ -1,0 +1,36 @@
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; color: #333; }
+
+/* Barra Superior */
+.navbar { background-color: #d32f2f; color: white; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.brand { display: flex; align-items: center; gap: 15px; font-weight: bold; font-size: 1.2rem; }
+.brand img { height: 40px; border-radius: 4px; }
+.btn-regresar { background-color: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.btn-regresar:hover { background-color: #555; }
+
+/* Contenedor Dividido */
+.main-container { padding: 30px; display: flex; gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
+.form-panel, .list-panel { background-color: white; padding: 25px; border-top: 5px solid #d32f2f; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+/* Izquierda: Formulario */
+.form-panel { flex: 1; min-width: 300px; max-width: 400px; }
+.panel-title { color: #d32f2f; margin-top: 0; border-bottom: 2px solid #fbc02d; display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
+.input-group { margin-bottom: 15px; }
+label { font-weight: bold; color: #555; display: block; margin-bottom: 5px; font-size: 0.9rem; }
+input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+input:focus, select:focus { border-color: #d32f2f; outline: none; }
+
+.action-buttons { display: flex; gap: 10px; margin-top: 25px; }
+.btn-save { background-color: #2e7d32; color: white; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; flex: 1; transition: 0.2s; }
+.btn-save:hover { background-color: #1b5e20; }
+.btn-clear { background-color: #eee; color: #333; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: bold; flex: 1; }
+.btn-clear:hover { background-color: #e0e0e0; }
+
+/* Derecha: Tabla de Usuarios */
+.list-panel { flex: 2; overflow-y: auto; max-height: 550px; }
+.users-table { width: 100%; border-collapse: collapse; text-align: left; }
+.users-table th { background-color: #f8f9fa; padding: 12px; border-bottom: 2px solid #ddd; color: #d32f2f; }
+.users-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+.users-table tr:hover { background-color: #fcfcfc; }
+
+.status-active { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; }
+.status-inactive { color: #c62828; font-weight: bold; background: #ffebee; padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; }

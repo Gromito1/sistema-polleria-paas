@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras de Insumos - Pollos El Güero</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* TEMA OSCURO BASADO EN TU REFERENCIA */
+        :root {
+            --bg-dark: #121212;
+            --bg-panel: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-gold: #ffc107;
+            --btn-green: #28a745;
+            --btn-red: #dc3545;
+            --border-color: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CABECERA */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+        .header-info {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .btn-regresar {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn-regresar:hover { background-color: #555; }
+
+        /* CONTENEDOR PRINCIPAL DIVIDIDO */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            gap: 20px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .panel {
+            background-color: var(--bg-panel);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* TABLAS ESTILO INVENTARIO */
+        .table-container {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th {
+            text-align: left;
+            padding: 12px 10px;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-panel);
+        }
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ELEMENTOS DEL FORMULARIO Y BOTONES */
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .btn-action {
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-add { background-color: var(--btn-green); }
+        .btn-del { background-color: var(--btn-red); }
+        
+        /* TOTALES Y REGISTRO */
+        .summary-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--border-color);
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .total-amount { color: var(--btn-green); }
+        
+        .btn-block {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .btn-submit { background-color: var(--accent-gold); color: #000; }
+        .btn-submit:disabled { background-color: #555; color: #888; cursor: not-allowed; }
+        .btn-clear { background-color: var(--btn-red); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">
+            <i class="fa-solid fa-boxes-packing"></i>
+            <span>Registro de Compras e Insumos</span>
+        </div>
+        <div class="header-info">
+            <span id="lblUsuario">Usuario: --</span> &nbsp;|&nbsp; 
+            <span id="lblFecha">--/--/----</span>
+        </div>
+        <button class="btn-regresar" onclick="window.parent.mostrarBienvenida()">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Menú
+        </button>
+    </div>
+
+    <div class="main-grid">
+        <div class="panel">
+            <h3 class="panel-title">Catálogo de Materia Prima</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre del Insumo</th>
+                            <th>Unidad</th>
+                            <th>Costo Est.</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCatalogoInsumos">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted);">Cargando insumos...</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3 class="panel-title">Detalle de la Compra</h3>
+            
+            <label style="color: var(--text-muted); font-size: 12px; margin-bottom: 5px; display: block;">Seleccione el Proveedor:</label>
+            <select id="selProveedor">
+                <option value="">Cargando proveedores...</option>
+            </select>
+
+            <div class="table-container" style="min-height: 200px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cant.</th>
+                            <th>Insumo</th>
+                            <th>SubT.</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCompra">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="summary-box">
+                <div class="total-row">
+                    <span>TOTAL:</span>
+                    <span id="lblTotal" class="total-amount">$0.00</span>
+                </div>
+                
+                <button id="btnRegistrarCompra" class="btn-block btn-submit" disabled>
+                    <i class="fa-solid fa-check"></i> Registrar Ingreso a Almacén
+                </button>
+                <button id="btnCancelarCompra" class="btn-block btn-clear">
+                    <i class="fa-solid fa-trash"></i> Vaciar Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../control/js/comprasControl.js?v=2"></script>
+</body>
+</html>

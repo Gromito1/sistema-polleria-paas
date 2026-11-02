@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Principal - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/mainMenVista.css">
+    <style>
+        /* Clase para ocultar los módulos que no tienen permisos asignados */
+        .hidden-module { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand">
+            <img src="../img/logo.jpg" alt="Logo">
+            <h2>Pollos El Güero - Sistema Administrativo</h2>
+        </div>
+        <div class="user-info">
+            <span id="lblUsuario">Bienvenido</span>
+            <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <h3 class="section-title">OPERACIONES PRINCIPALES</h3>
+        <div class="menu-grid">
+            <a href="#" id="MOD_DASH" class="menu-card"><span>DashBoard</span></a> 
+            <a href="ventasVista.html" id="MOD_VENT" class="menu-card"><span>Mantenimiento de Ventas</span></a> 
+            <a href="#" id="MOD_COMP" class="menu-card"><span>Mantenimiento de Compras</span></a> 
+            <a href="#" id="MOD_FACT" class="menu-card"><span>Gestión de Facturas</span></a> 
+            <a href="#" id="MOD_DOMI" class="menu-card"><span>Entrega a Domicilio</span></a> 
+            <a href="cajaVista.html" id="MOD_CAJA" class="menu-card"><span>Corte de Caja</span></a> 
+        </div>
+
+        <h3 class="section-title" style="margin-top: 40px;">ADMINISTRACIÓN E INVENTARIO</h3>
+        <div class="menu-grid">
+            <a href="#" id="MOD_INVE" class="menu-card"><span>Administración de Inventario</span></a> 
+            <a href="#" id="MOD_CATA" class="menu-card"><span>Mantenimiento de Catálogos</span></a> 
+            <a href="personaVista.html" id="MOD_PERS" class="menu-card"><span>Datos Personales</span></a> 
+            <a href="#" id="MOD_GAST" class="menu-card"><span>Control de Otros Gastos</span></a> 
+            <a href="#" id="MOD_COTI" class="menu-card"><span>Administración de Cotizaciones</span></a> 
+            <a href="#" id="MOD_REPO" class="menu-card"><span>Reportes</span></a> 
+        </div>
+
+        <h3 class="section-title" style="margin-top: 40px;">SEGURIDAD Y SISTEMA</h3>
+        <div class="menu-grid">
+            <a href="usuariosVista.html" id="MOD_USER" class="menu-card"><span>Gestión de Usuarios</span></a> 
+            <a href="accesosVista.html" id="MOD_ACCE" class="menu-card"><span>Control de Accesos</span></a> 
+            <a href="cmbPassVista.html" id="MOD_PASS" class="menu-card"><span>Cambiar de Password</span></a> 
+            <a href="#" id="MOD_BACK" class="menu-card"><span>Respaldar Base de Datos</span></a> 
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Verificamos si hay una sesión activa
+            const usuario = localStorage.getItem('usuarioLogueado');
+            const permisosRaw = localStorage.getItem('permisos');
+            
+            // Si no hay usuario en memoria, redirigimos al login inmediatamente
+            if(!usuario) { 
+                window.location.href = '../../index.html'; 
+                return; 
+            }
+            
+            // 2. Mostramos el nombre del usuario logueado
+            document.getElementById('lblUsuario').innerText = 'Bienvenido, ' + usuario;
+
+            // 3. Aplicamos la Seguridad Dinámica (Ocultar botones)
+            if(permisosRaw) {
+                try {
+                    const permisos = JSON.parse(permisosRaw);
+                    const modulos = document.querySelectorAll('.menu-card[id]');
+                    
+                    modulos.forEach(modulo => {
+                        // Si el ID del botón no está en la lista de permisos del usuario, lo ocultamos
+                        if(!permisos.includes(modulo.id)) {
+                            modulo.classList.add('hidden-module');
+                        }
+                    });
+                } catch (e) {
+                    console.error("Error al procesar los permisos:", e);
+                }
+            }
+        });
+
+        // Función para limpiar la memoria y salir del sistema
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = '../../index.html';
+        }
+    </script>
+</body>
+</html>

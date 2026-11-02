@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar Password - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/cmbPassVista.css">
+</head>
+<body>
+    
+    <div style="position: relative;">
+        
+        <div id="cajaErrores" style="display: none; position: absolute; bottom: 100%; left: 0; right: 0; margin-bottom: 15px; z-index: 9999; padding: 12px; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); box-sizing: border-box;">
+            <strong id="msgGeneral"></strong>
+            <ul id="listaErrores" style="margin: 5px 0 0 0; padding-left: 20px; font-size: 14px; font-weight: bold; color: #666;">
+                <li id="liPassAnt" style="display: none;">Pw Anter: <span id="txtErrAnt" style="font-weight: normal;"></span></li>
+                <li id="liPassNvo" style="display: none;">Pw Nvo: <span id="txtErrNvo" style="font-weight: normal;"></span></li>
+                <li id="liPassRep" style="display: none;">Rep PassW: <span id="txtErrRep" style="font-weight: normal;"></span></li>
+            </ul>
+        </div>
+
+        <div class="window-container">
+            <div class="title-bar">
+                <span>Cambiar Password</span>
+                <div class="window-controls">
+                    <span>_</span><span>□</span><span onclick="window.parent.mostrarBienvenida()" style="cursor: pointer;">X</span>
+                </div>
+            </div>
+            <div class="content">
+                
+                <div class="logo-small">
+                    <img src="../img/logo.jpg" alt="Logo Pollos El Güero">
+                    <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: #333;">
+                        Usuario: <span id="lblUsuarioActivo" style="color: #d32f2f;">Cargando...</span>
+                    </div>
+                </div>
+                
+                <form id="formCmbPass">
+                    <div class="input-group">
+                        <label>Password Anterior:</label>
+                        <div class="pass-wrapper">
+                            <input type="password" id="txtPassAnt" maxlength="16">
+                            <button type="button" class="btn-eye" onclick="togglePass('txtPassAnt')">👁️</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Password Nuevo:</label>
+                        <div class="pass-wrapper">
+                            <input type="password" id="txtPassNvo" maxlength="16">
+                            <button type="button" class="btn-eye" onclick="togglePass('txtPassNvo')">👁️</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Repita Password Nvo:</label>
+                        <div class="pass-wrapper">
+                            <input type="password" id="txtPassRep" maxlength="16">
+                            <button type="button" class="btn-eye" onclick="togglePass('txtPassRep')">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="options-section">
+                        <legend>Opciones</legend>
+                        <button type="button" id="btnAceptar" class="btn btn-aceptar" disabled>Aceptar</button>
+                        <button type="button" id="btnCancelar" class="btn btn-cancelar" onclick="window.parent.mostrarBienvenida()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function togglePass(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+    </script>
+    
+    <script src="../../control/js/cmbPassControl.js?v=21"></script>
+</body>
+</html>

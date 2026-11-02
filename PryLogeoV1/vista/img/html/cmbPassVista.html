@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar Password - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/cmbPassVista.css">
+</head>
+<body>
+    <div class="window-container">
+        <div class="title-bar">
+            <span>Cambiar Password</span>
+            <div class="window-controls">
+                <span>_</span><span>□</span><span onclick="window.location.href='mainMenVista.html'">X</span>
+            </div>
+        </div>
+        <div class="content">
+            
+            <div class="logo-small">
+                <img src="../img/logo.jpg" alt="Logo Pollos El Güero">
+            </div>
+            
+            <form id="formCmbPass">
+                <div class="input-group">
+                    <label>Password Anterior:</label>
+                    <div class="pass-wrapper">
+                        <input type="password" id="txtPassAnt" maxlength="16">
+                        <button type="button" class="btn-eye" onclick="togglePass('txtPassAnt')">👁️</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password Nuevo:</label>
+                    <div class="pass-wrapper">
+                        <input type="password" id="txtPassNvo" maxlength="16">
+                        <button type="button" class="btn-eye" onclick="togglePass('txtPassNvo')">👁️</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Repita Password Nvo:</label>
+                    <div class="pass-wrapper">
+                        <input type="password" id="txtPassRep" maxlength="16">
+                        <button type="button" class="btn-eye" onclick="togglePass('txtPassRep')">👁️</button>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <legend>Opciones</legend>
+                    <button type="button" id="btnAceptar" class="btn btn-aceptar" disabled>Aceptar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-cancelar">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="../../control/js/cmbPassControl.js?v=2"></script>
+</body>
+</html>

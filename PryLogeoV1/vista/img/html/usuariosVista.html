@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/usuariosVista.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <img src="../img/logo.jpg" alt="Logo Pollos">
+            <span>Administración de Usuarios</span>
+        </div>
+        <button class="btn-regresar" onclick="window.location.href='mainMenVista.html'">Volver al Menú</button>
+    </header>
+
+    <div class="main-container">
+        <div class="form-panel">
+            <h2 class="panel-title">Nuevo Usuario</h2>
+            <form id="formUsuario">
+                <div class="input-group">
+                    <label>Login (Usuario):</label>
+                    <input type="text" id="txtLogin" placeholder="Ej: Cajero01" maxlength="15" required>
+                </div>
+                <div class="input-group">
+                    <label>Password Temporal:</label>
+                    <input type="text" id="txtPassword" placeholder="Asigna una contraseña" maxlength="16" required>
+                </div>
+                <div class="input-group">
+                    <label>Fecha de Inicio:</label>
+                    <input type="date" id="txtFecIni" required>
+                </div>
+                <div class="input-group">
+                    <label>Fecha de Término:</label>
+                    <input type="date" id="txtFecTer" required>
+                </div>
+                <div class="input-group">
+                    <label>Estado de Cuenta:</label>
+                    <select id="selEdoCta">
+                        <option value="1">Activa (TRUE)</option>
+                        <option value="0">Inactiva (FALSE)</option>
+                    </select>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="button" id="btnGuardar" class="btn-save">Guardar Usuario</button>
+                    <button type="button" id="btnLimpiar" class="btn-clear">Limpiar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="list-panel">
+            <h2 class="panel-title">Usuarios en el Sistema</h2>
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Login</th>
+                        <th>Inicio de Contrato</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaUsuarios">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #666;">Cargando usuarios...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../../control/js/usuariosControl.js?v=5"></script>
+</body>
+</html>

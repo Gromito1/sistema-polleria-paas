@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Accesos - Pollos El Güero</title>
+    <link rel="stylesheet" href="../css/accesosVista.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <img src="../img/logo.jpg" alt="Logo">
+            <span>Control de Accesos al Sistema</span>
+        </div>
+        <button class="btn-regresar" onclick="window.parent.mostrarBienvenida()">Regresar</button>
+    </header>
+
+    <div class="main-container">
+        <div class="card">
+            <h2 class="form-title">Asignación de Permisos</h2>
+            
+            <div class="split-layout">
+                <div class="left-panel">
+                    <label>Seleccione el Usuario:</label>
+                    <select id="selUsuario">
+                        <option value="">-- Seleccione un Login --</option>
+                    </select>
+                    
+                    <div class="user-info-box" id="userInfoBox" style="display:none;">
+                        <p><strong>ID Usuario:</strong> <span id="lblCvUser"></span></p>
+                        <p><strong>Estado:</strong> <span id="lblEstado"></span></p>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+                    <label>Módulos Disponibles:</label>
+                    <div class="permissions-list" id="contenedorPermisos">
+                        <p style="color: #666; font-style: italic;">Seleccione un usuario para cargar sus permisos...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-container">
+                <button type="button" id="btnGuardar" class="btn btn-save" disabled>Guardar Cambios</button>
+                <button type="button" id="btnCancelar" class="btn btn-clear">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../control/js/accesosControl.js?v=10"></script>
+</body>
+</html>
