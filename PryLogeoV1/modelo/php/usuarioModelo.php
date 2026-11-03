@@ -5,8 +5,8 @@ class UsuarioModelo {
     private $db;
 
     public function __construct() {
-        global $conexion;
-        $this->db = $conexion;
+        $database = new ConexionBD();
+        $this->db = $database->getConexion();
     }
 
     public function validarAcceso($login, $password) {
