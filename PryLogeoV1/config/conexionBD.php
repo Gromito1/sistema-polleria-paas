@@ -14,7 +14,10 @@ try {
     $conexion = new PDO($dsn, $usuario, $aprobar, $options);
 } catch (PDOException $mi) {
     header('Content-Type: application/json');
-    echo json_encode(["status" => "error", "mensaje" => "Error de conexión: " . $mi->getMessage()]);
+    echo json_encode([
+        "status" => "error", 
+        "mensaje" => "Error detallado: " . $mi->getMessage()
+    ]);
     exit();
 }
 ?>
