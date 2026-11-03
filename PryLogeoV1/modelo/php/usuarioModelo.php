@@ -11,7 +11,7 @@ class UsuarioModelo {
 
     public function validarAcceso($login, $password) {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM m_usuario WHERE cLogin = :login AND cPassword = :password LIMIT 1");
+            $stmt = $this->db->prepare("SELECT * FROM musuario WHERE cLogin = :login AND cPassword = :password LIMIT 1");
             $stmt->execute([
                 ':login' => $login,
                 ':password' => $password
