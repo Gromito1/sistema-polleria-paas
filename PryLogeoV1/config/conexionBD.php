@@ -1,8 +1,8 @@
 <?php
-$host = getenv('MYSQL_ADDON_HOST') ?: 'localhost';
-$db   = getenv('MYSQL_ADDON_DB') ?: 'tu_base_de_datos';
-$user = getenv('MYSQL_ADDON_USER') ?: 'tu_usuario';
-$pass = getenv('MYSQL_ADDON_PASSWORD') ?: 'tu_contraseña';
+$host = getenv('MYSQL_ADDON_HOST') ?: 'b6r97syfb1cm98gl75cv-mysql.services.clever-cloud.com';
+$db   = getenv('MYSQL_ADDON_DB') ?: 'b6r97syfb1cm98gl75cv';
+$user = getenv('MYSQL_ADDON_USER') ?: 'uz8ia64bxapybifr';
+$pass = getenv('MYSQL_ADDON_PASSWORD') ?: 'I8neeQbGpYVq1FT24lqN';
 $port = getenv('MYSQL_ADDON_PORT') ?: '3306';
 
 try {
