@@ -6,11 +6,15 @@ $aprobar    = getenv('MYSQL_ADDON_PASSWORD') ?: 'I8neeQbGpYVq1FT24lqN';
 $puerto     = getenv('MYSQL_ADDON_PORT') ?: '3306';
 
 try {
-    $conexion = new PDO("mysql:host=$anfitrion;port=$puerto;dbname=$base_datos;charset=utf8mb4", $usuario, $aprobar);
-    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dsn = "mysql:host=$anfitrion;port=$puerto;dbname=$base_datos;charset=utf8mb4";
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+    ];
+    $conexion = new PDO($dsn, $usuario, $aprobar, $options);
 } catch (PDOException $mi) {
     header('Content-Type: application/json');
-    echo json_encode(["status" => "error", "mensaje" => "Error de BD: " . $mi->getMessage()]);
+    echo json_encode(["status" => "error", "mensaje" => "Error de conexión: " . $mi->getMessage()]);
     exit();
 }
 ?>
